@@ -12,16 +12,6 @@
   position: relative;
 }
 
-.page-label {
-  position: absolute;
-  top: 5px;
-  left: 7px;
-  color: #bcbcbc;
-  font-family: var(--font-label);
-  font-size: 22px;
-  line-height: 1;
-}
-
 .login-panel {
   width: min(100%, 412px);
   margin: 0 auto;
@@ -378,6 +368,7 @@
   font-weight: 400;
   letter-spacing: 0;
   line-height: 120%;
+  overflow-wrap: anywhere;
   padding: 0;
   text-align: left;
 }
@@ -628,8 +619,7 @@
   font-weight: 700;
 }
 
-.login-button,
-.button {
+.login-button {
   min-height: 44px;
   border: 0;
   border-radius: 6px;
@@ -656,18 +646,8 @@
   place-items: center;
 }
 
-.button:disabled {
-  cursor: not-allowed;
-  opacity: 0.62;
-}
-
 .login-button:disabled {
   cursor: not-allowed;
-}
-
-.button:focus {
-  outline: 3px solid var(--focus-ring-color);
-  outline-offset: 2px;
 }
 
 .login-button:focus {
@@ -853,7 +833,7 @@
   }
 
   .catalog-filter-panel {
-    padding: 28px;
+    padding: 24px;
   }
 
   .catalog-columns-section {
@@ -869,11 +849,60 @@
   }
 
   .catalog-filter-option-grid {
-    column-gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+    column-gap: 20px;
     row-gap: 24px;
   }
 
   .catalog-filter-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 120px;
+    align-items: center;
+    gap: 16px;
     margin-top: 40px;
+  }
+
+  .catalog-games-count {
+    min-width: 0;
+  }
+
+  .catalog-reset-button {
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 380px) {
+  .player-navbar {
+    padding: 0 16px;
+  }
+
+  .player-navbar-logo {
+    width: 64px;
+    height: 64px;
+  }
+
+  .player-navbar-actions {
+    gap: 14px;
+  }
+
+  .player-name,
+  .logout-button {
+    font-size: 15px;
+  }
+
+  .player-content {
+    padding: 32px 16px;
+  }
+
+  .catalog-filter-panel {
+    padding: 20px;
+  }
+
+  .catalog-filter-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-reset-button {
+    width: 100%;
   }
 }

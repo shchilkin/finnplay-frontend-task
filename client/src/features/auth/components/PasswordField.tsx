@@ -1,5 +1,7 @@
 import { useId, useState } from "react";
 
+import { EyeIcon } from "../../../shared/ui/icons";
+
 type PasswordFieldProps = {
   disabled: boolean;
   onValueChange: (value: string) => void;
@@ -33,10 +35,7 @@ export function PasswordField({ disabled, onValueChange, value }: PasswordFieldP
           onClick={() => setIsPasswordVisible((currentValue) => !currentValue)}
           disabled={disabled}
         >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
+          <EyeIcon />
         </button>
       </div>
     </div>

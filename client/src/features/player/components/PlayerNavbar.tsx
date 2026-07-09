@@ -1,6 +1,7 @@
 import type { Username } from "@finnplay-test-task/shared";
 
 import finnplayLogoUrl from "../../../assets/finnplay-logo.png";
+import { UserIcon } from "../../../shared/ui/icons";
 
 type PlayerNavbarProps = {
   isLogoutPending: boolean;
@@ -25,10 +26,7 @@ export function PlayerNavbar({ isLogoutPending, onLogout, username }: PlayerNavb
           onClick={onLogout}
           disabled={isLogoutPending}
         >
-          <svg viewBox="0 0 16 16" aria-hidden="true">
-            <circle cx="8" cy="5" r="2.25" />
-            <path d="M3.25 13.25c.54-2.08 2.34-3.5 4.75-3.5s4.21 1.42 4.75 3.5" />
-          </svg>
+          <UserIcon />
           Logout
         </button>
       </div>
