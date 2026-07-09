@@ -6,8 +6,18 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 
 - `client` - React application
 - `server` - Node.js API
-- `shared` - shared TypeScript types and contracts
+- `shared` - shared TypeScript types used by the client and server
 - `data.json` - initial in-memory catalog data
+
+## Technical Decisions
+
+- TypeScript is used across the repository because the task explicitly values typed code and the client and server use the same data shapes.
+- npm workspaces are used to keep the client, server, and shared package in one repository with one lockfile and one install command.
+- The Oxc toolchain is used for code quality:
+  - `oxfmt` formats the codebase.
+  - `oxlint` catches common JavaScript and TypeScript issues.
+- Lint rules start with a conservative baseline and can be tightened as the client and server code grow.
+- `data.json` is treated as source task data and is excluded from automatic formatting to avoid noisy fixture-only changes.
 
 ## Design
 

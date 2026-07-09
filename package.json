@@ -1,11 +1,26 @@
 {
   "name": "finnplay-test-task",
-  "workspaces": ["client", "server","shared"],
-  "private": true,
   "version": "1.0.0",
+  "private": true,
   "description": "Frontend developer test task for Finnplay",
   "license": "ISC",
   "author": "Aleksandr Shchilkin",
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
   "type": "module",
-  "scripts": {}
+  "scripts": {
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.58.0",
+    "oxlint": "^1.73.0",
+    "typescript": "^7.0.2"
+  }
 }
