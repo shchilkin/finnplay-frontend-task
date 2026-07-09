@@ -6,6 +6,28 @@
   padding: 32px;
 }
 
+.login-page {
+  min-height: 100vh;
+  background: var(--background-color);
+  position: relative;
+}
+
+.page-label {
+  position: absolute;
+  top: 5px;
+  left: 7px;
+  color: #bcbcbc;
+  font-family: var(--font-label);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.login-panel {
+  width: min(100%, 412px);
+  margin: 0 auto;
+  padding: 206px 0 0;
+}
+
 .app-panel {
   width: min(100%, 640px);
   border: 1px solid var(--border-color);
@@ -13,6 +35,14 @@
   background: var(--surface-color);
   padding: 32px;
   box-shadow: 0 20px 60px rgb(15 23 42 / 8%);
+}
+
+.brand-logo {
+  display: block;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 40px;
+  object-fit: contain;
 }
 
 .app-kicker {
@@ -35,4 +65,346 @@
   color: var(--text-color);
   font-size: 18px;
   line-height: 1.6;
+}
+
+.player-page {
+  min-height: 100vh;
+  background: var(--background-color);
+}
+
+.player-shell {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--background-color);
+}
+
+.player-navbar {
+  display: flex;
+  width: 100%;
+  min-height: 70px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface-color);
+  box-shadow: 0 -2px 18px rgb(128 128 128 / 10%);
+  padding: 0 80px;
+}
+
+.player-navbar-logo {
+  display: block;
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+
+.player-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.player-name,
+.logout-button {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 120%;
+}
+
+.player-name {
+  color: var(--heading-color);
+}
+
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--accent-color);
+  cursor: pointer;
+  padding: 0;
+}
+
+.logout-button svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+}
+
+.logout-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.logout-button:focus {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 4px;
+}
+
+.player-content {
+  min-height: calc(100vh - 70px);
+  padding: 24px 80px;
+}
+
+.player-error {
+  margin: 0;
+  color: var(--danger-color);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 120%;
+}
+
+.login-form {
+  display: grid;
+  gap: 20px;
+  width: 412px;
+  margin: 0 auto;
+}
+
+.field {
+  display: block;
+  width: 100%;
+  height: 64px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: #fff;
+  padding: 0;
+  position: relative;
+  color: var(--heading-color);
+}
+
+.field-label {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  color: var(--muted-text-color);
+  font-family: var(--font-label);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 120%;
+  opacity: 1;
+  pointer-events: none;
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease;
+}
+
+.field-input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--heading-color);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 120%;
+  padding: 26px 16px 12px;
+}
+
+.field-input--with-action {
+  padding-right: 48px;
+}
+
+.field-input::placeholder {
+  color: var(--muted-text-color);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 120%;
+  opacity: 1;
+}
+
+.field[data-filled="false"] .field-input {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.field[data-filled="false"] .field-label {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.field:focus-within {
+  border-color: var(--focus-color);
+  outline: 3px solid var(--focus-ring-color);
+}
+
+.field-input:focus {
+  outline: 0;
+}
+
+.password-field {
+  position: relative;
+  height: 100%;
+}
+
+.password-toggle {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+  color: var(--muted-text-color);
+  cursor: pointer;
+  padding: 0;
+  place-items: center;
+  position: absolute;
+  top: 20px;
+  right: 12px;
+}
+
+.password-toggle svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.password-toggle:focus {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 3px;
+}
+
+.form-error {
+  margin: 0;
+  color: var(--danger-color);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.login-button,
+.button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--button-color);
+  color: var(--heading-color);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 120%;
+  padding: 0 18px;
+}
+
+.login-button {
+  display: grid;
+  width: 412px;
+  height: 64px;
+  border-radius: 4px;
+  gap: 10px;
+  justify-self: center;
+  margin-top: 20px;
+  padding: 0 24px;
+  place-items: center;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.login-button:disabled {
+  cursor: not-allowed;
+}
+
+.button:focus {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.login-button:focus {
+  outline: 3px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+.spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid rgb(43 43 43 / 26%);
+  border-top-color: var(--heading-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.visually-hidden {
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 720px) {
+  .player-navbar {
+    padding: 0 24px;
+  }
+
+  .player-navbar-actions {
+    gap: 24px;
+  }
+
+  .player-content {
+    padding: 24px;
+  }
+
+  .login-panel {
+    width: min(100%, 380px);
+    padding: 206px 0 0;
+  }
+
+  .brand-logo {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 40px;
+  }
+
+  .login-form {
+    width: min(100%, 380px);
+    gap: 20px;
+  }
+
+  .field-label {
+    font-size: 12px;
+  }
+
+  .field-input {
+    height: 100%;
+    font-size: 16px;
+    padding: 26px 16px 12px;
+  }
+
+  .field-input--with-action {
+    padding-right: 48px;
+  }
+
+  .password-toggle {
+    top: 20px;
+    right: 12px;
+  }
+
+  .login-button {
+    width: min(100%, 380px);
+    margin-top: 20px;
+  }
 }
