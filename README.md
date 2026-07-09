@@ -30,6 +30,10 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - The login and player views use local component composition instead of a UI library, matching the task restriction and keeping the implementation close to the Figma design.
 - The catalog defaults to A-Z sorting so the initial game list is deterministic and easy to scan.
 - Multiple selected values inside one filter criterion use OR semantics, while different criteria are combined with AND semantics.
+- The catalog page renders explicit loading, error, and empty states because API data is loaded asynchronously and filters can legitimately produce no visible games.
+- Catalog errors expose a retry action, while empty filtered results stay focused on the message because reset is already available in the filter panel.
+- Game cards try the large cover first, fall back to the lower-resolution cover, and finally show a text placeholder if both image URLs fail.
+- The player navbar and desktop filter panel are sticky so filtering controls stay reachable while scrolling a long game list. The filter panel is not sticky on mobile to preserve vertical space.
 
 ### Server
 
@@ -38,6 +42,7 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - The server validates `data.json` with the shared Zod schema on startup and fails fast if the catalog data is invalid.
 - Player sessions are stored in memory and identified by an `httpOnly` session cookie, matching the task requirement without adding a database.
 - A lightweight `/health` endpoint is included for future container health checks.
+- The catalog API supports non-production failure and delay modes through environment variables so loading and error states can be checked manually without changing client code.
 
 ### Quality
 
@@ -65,6 +70,20 @@ npm run dev
 
 - Client: `http://localhost:5173`
 - Server: `http://localhost:3010`
+
+Run the app with a delayed catalog response:
+
+```sh
+npm run dev:slow-api
+```
+
+Run the app with a forced catalog API error:
+
+```sh
+npm run dev:error-api
+```
+
+If a previous dev server is still running, stop the old processes before using the API delay or error scripts because the client proxy always targets `http://localhost:3010`.
 
 Run checks:
 
