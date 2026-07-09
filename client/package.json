@@ -1,5 +1,5 @@
 {
-  "name": "@finnplay/client",
+  "name": "@finnplay-test-task/client",
   "version": "1.0.0",
   "private": true,
   "type": "module",
