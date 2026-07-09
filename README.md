@@ -169,7 +169,7 @@ Recommended settings:
 - Repository branch: `main`, `development`, or your deployment branch
 - Build pack: Docker Compose
 - Compose file: `./coolify.compose.yml`
-- Domain: `finnplay-task.shchilkin.dev`
+- Domain: `finnplay-frontend-task.shchilkin.dev`
 - Service: `app`
 - Port: `3000`
 - Health check path: `/health`
@@ -178,7 +178,7 @@ Recommended settings:
   - `PORT=3000`
   - `IMAGE_TAG=development`
 
-DNS should point `finnplay-task.shchilkin.dev` to the VPS IP address before enabling the domain in Coolify.
+DNS should point `finnplay-frontend-task.shchilkin.dev` to the VPS IP address before enabling the domain in Coolify.
 
 Coolify should route the configured domain to the `app` service on container port `3000`. The app uses same-origin API requests, so no CORS configuration is needed when the client and API are served from the same container.
 

@@ -1,23 +1,12 @@
-import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [react()],
   resolve: {
     alias: {
       "@finnplay-test-task/shared": fileURLToPath(
         new URL("../shared/src/index.ts", import.meta.url),
       ),
     },
-  },
-  server: {
-    proxy: {
-      "/api": "http://localhost:3010",
-    },
-  },
-  test: {
-    environment: "jsdom",
-    setupFiles: ["./src/test/setup.ts"],
   },
 });
