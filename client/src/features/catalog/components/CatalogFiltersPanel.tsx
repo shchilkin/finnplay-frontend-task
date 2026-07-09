@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { CatalogData } from "@finnplay-test-task/shared";
 
+import { MenuIcon, SearchIcon } from "../../../shared/ui/icons";
 import {
   catalogColumnOptions,
   catalogSortingOptions,
@@ -192,7 +193,7 @@ function FilterToggleButton({
         onExpandedChange(!isExpanded);
       }}
     >
-      <MenuIcon />
+      <MenuIcon className="catalog-menu-icon" />
       {isExpanded ? "Hide filters" : "Show filters"}
     </button>
   );
@@ -216,7 +217,7 @@ function SearchField({ onChange, value }: SearchFieldProps) {
           onChange(event.target.value);
         }}
       />
-      <SearchIcon />
+      <SearchIcon className="catalog-search-icon" />
     </label>
   );
 }
@@ -275,24 +276,5 @@ function FilterCheckbox({ isChecked, label, onChange }: FilterCheckboxProps) {
       <input className="visually-hidden" type="checkbox" checked={isChecked} onChange={onChange} />
       {label}
     </label>
-  );
-}
-
-function SearchIcon() {
-  return (
-    <svg className="catalog-search-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="10.5" cy="10.5" r="6.5" />
-      <path d="m15.25 15.25 5 5" />
-    </svg>
-  );
-}
-
-function MenuIcon() {
-  return (
-    <svg className="catalog-menu-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4 7h16" />
-      <path d="M4 12h16" />
-      <path d="M4 17h16" />
-    </svg>
   );
 }
