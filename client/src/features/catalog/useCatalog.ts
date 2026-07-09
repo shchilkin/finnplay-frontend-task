@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CatalogResponse } from "@finnplay-test-task/shared";
 
 import { getCatalog } from "./api";
@@ -21,43 +21,49 @@ type CatalogState =
     };
 
 export function useCatalog() {
+  const isMountedRef = useRef(false);
+  const requestIdRef = useRef(0);
   const [state, setState] = useState<CatalogState>({
     catalog: null,
     error: null,
     status: "loading",
   });
 
-  useEffect(() => {
-    let isActive = true;
+  const loadCatalog = useCallback(async () => {
+    const requestId = requestIdRef.current + 1;
 
-    async function loadCatalog() {
-      try {
-        const catalog = await getCatalog();
+    requestIdRef.current = requestId;
+    setState({ catalog: null, error: null, status: "loading" });
 
-        if (!isActive) {
-          return;
-        }
+    try {
+      const catalog = await getCatalog();
 
-        setState({ catalog, error: null, status: "loaded" });
-      } catch (error) {
-        if (!isActive) {
-          return;
-        }
-
-        setState({
-          catalog: null,
-          error: error instanceof Error ? error.message : "Unable to load games.",
-          status: "error",
-        });
+      if (!isMountedRef.current || requestId !== requestIdRef.current) {
+        return;
       }
-    }
 
+      setState({ catalog, error: null, status: "loaded" });
+    } catch (error) {
+      if (!isMountedRef.current || requestId !== requestIdRef.current) {
+        return;
+      }
+
+      setState({
+        catalog: null,
+        error: error instanceof Error ? error.message : "Unable to load games.",
+        status: "error",
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    isMountedRef.current = true;
     void loadCatalog();
 
     return () => {
-      isActive = false;
+      isMountedRef.current = false;
     };
-  }, []);
+  }, [loadCatalog]);
 
-  return state;
+  return { ...state, reload: loadCatalog };
 }
