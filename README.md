@@ -2,6 +2,142 @@
 
 Full-stack React and Node.js application for filtering games by name, provider, and group.
 
+Original assignment: [TASK.md](./TASK.md)
+
+## Prerequisites
+
+- Node.js 24
+- npm
+
+Node.js 24 is used in CI. If you use nvm, run:
+
+```sh
+nvm use
+```
+
+## Quick Start
+
+Install dependencies:
+
+```sh
+npm install
+```
+
+Run the server and client together:
+
+```sh
+npm run dev
+```
+
+Open the client:
+
+```txt
+http://localhost:5173
+```
+
+The API runs on:
+
+```txt
+http://localhost:3010
+```
+
+## Environment Variables
+
+Local development works without creating an `.env` file. See [.env.example](./.env.example) for supported variables:
+
+| Variable           | Default                                      | Description                                              |
+| ------------------ | -------------------------------------------- | -------------------------------------------------------- |
+| `PORT`             | `3010` through the root `npm run dev` script | Server port                                              |
+| `NODE_ENV`         | unset locally                                | Runtime mode                                             |
+| `CATALOG_DELAY_MS` | `0`                                          | Non-production catalog API response delay                |
+| `CATALOG_ERROR`    | unset                                        | Set to `1` in non-production to force catalog API errors |
+
+## Login Credentials
+
+Use one of these username and password pairs on the login page:
+
+| Username  | Password  |
+| --------- | --------- |
+| `player1` | `player1` |
+| `player2` | `player2` |
+
+Sessions are stored in memory on the server, so users are logged out after a server restart.
+
+## Local Development
+
+Run the app with a delayed catalog response:
+
+```sh
+npm run dev:slow-api
+```
+
+Run the app with a forced catalog API error:
+
+```sh
+npm run dev:error-api
+```
+
+If a previous dev server is still running, stop the old processes before using the API delay or error scripts. The client proxy always targets `http://localhost:3010`.
+
+## Checks
+
+Run all checks:
+
+```sh
+npm run check
+```
+
+This runs:
+
+- formatting check
+- lint
+- typecheck
+- tests
+
+Individual commands:
+
+```sh
+npm run build
+npm run format:check
+npm run lint
+npm run typecheck
+npm run test
+```
+
+`npm run build` builds the client workspace.
+
+## API
+
+The client uses same-origin `/api` requests through the Vite proxy during local development.
+
+Available endpoints:
+
+| Method | Path               | Description               |
+| ------ | ------------------ | ------------------------- |
+| `GET`  | `/health`          | Health check              |
+| `POST` | `/api/auth/login`  | Create a player session   |
+| `GET`  | `/api/auth/me`     | Read the current session  |
+| `POST` | `/api/auth/logout` | Clear the current session |
+| `GET`  | `/api/catalog`     | Read catalog data         |
+
+## Manual QA
+
+Recommended manual checks:
+
+- Log in with `player1` / `player1`.
+- Log in with `player2` / `player2`.
+- Verify invalid credentials show an error.
+- Filter games by name.
+- Select multiple providers.
+- Select multiple game groups.
+- Verify multiple selected values inside one filter criterion use OR semantics.
+- Verify different filter criteria are combined with AND semantics.
+- Change sorting between A-Z, Z-A, and Newest.
+- Change the number of game columns on desktop.
+- Verify the columns control is hidden at the `428px` mobile breakpoint and the game list uses 2 columns.
+- Reset filters.
+- Log out.
+
 ## Project Structure
 
 - `client` - React application
@@ -26,7 +162,7 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - The client is built with Vite, React, and TypeScript to keep the frontend setup small and focused.
 - The Vite dev server proxies `/api` requests to the Node.js server, so client code can call the API through same-origin paths during local development.
 - The generated Vite starter UI is replaced with a minimal app shell before feature work starts.
-- Client code is grouped by feature (`auth`, `player`) so API calls, hooks, and UI components stay close to the behavior they support.
+- Client code is grouped by feature (`auth`, `player`, `catalog`) so API calls, hooks, and UI components stay close to the behavior they support.
 - The login and player views use local component composition instead of a UI library, matching the task restriction and keeping the implementation close to the Figma design.
 - The catalog defaults to A-Z sorting so the initial game list is deterministic and easy to scan.
 - Multiple selected values inside one filter criterion use OR semantics, while different criteria are combined with AND semantics.
@@ -34,6 +170,7 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - Catalog errors expose a retry action, while empty filtered results stay focused on the message because reset is already available in the filter panel.
 - Game cards try the large cover first, fall back to the lower-resolution cover, and finally show a text placeholder if both image URLs fail.
 - The player navbar and desktop filter panel are sticky so filtering controls stay reachable while scrolling a long game list. The filter panel is not sticky on mobile to preserve vertical space.
+- The mobile breakpoint is `428px`. On mobile, the game list always uses 2 columns and the columns control is hidden.
 
 ### Server
 
@@ -54,42 +191,12 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - Browser-mode or end-to-end tests are deferred until the game catalog and filtering UI exist, where real browser layout and responsive behavior matter more.
 - Lint rules start with a conservative baseline and can be tightened as the client and server code grow.
 
-## Development
+## Known Limitations and Tradeoffs
 
-Install dependencies:
-
-```sh
-npm install
-```
-
-Run the server and client together:
-
-```sh
-npm run dev
-```
-
-- Client: `http://localhost:5173`
-- Server: `http://localhost:3010`
-
-Run the app with a delayed catalog response:
-
-```sh
-npm run dev:slow-api
-```
-
-Run the app with a forced catalog API error:
-
-```sh
-npm run dev:error-api
-```
-
-If a previous dev server is still running, stop the old processes before using the API delay or error scripts because the client proxy always targets `http://localhost:3010`.
-
-Run checks:
-
-```sh
-npm run check
-```
+- Sessions are stored in memory according to the task requirement, so they are cleared when the server restarts.
+- No database is used according to the task requirement. Initial data is loaded from `data.json` and kept in memory.
+- Tablet-sized layouts are functional, while the main visual tuning follows the supplied desktop and `428px` mobile designs.
+- Some high-resolution image URLs from `data.json` are unavailable on the CDN. Game cards try the high-resolution cover first, fall back to the lower-resolution cover, and then show a text placeholder when both image URLs are unavailable.
 
 ## Design
 
