@@ -34,6 +34,7 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - The Oxc toolchain is used for code quality:
   - `oxfmt` formats the codebase.
   - `oxlint` catches common JavaScript and TypeScript issues.
+- Vitest is used as the shared test runner across workspaces, with Supertest covering Express routes without starting a real HTTP port.
 - Lint rules start with a conservative baseline and can be tightened as the client and server code grow.
 
 ## Development
