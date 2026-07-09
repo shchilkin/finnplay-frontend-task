@@ -1,0 +1,11 @@
+{
+  "name": "finnplay-test-task",
+  "workspaces": ["client", "server","shared"],
+  "private": true,
+  "version": "1.0.0",
+  "description": "Frontend developer test task for Finnplay",
+  "license": "ISC",
+  "author": "Aleksandr Shchilkin",
+  "type": "module",
+  "scripts": {}
+}
