@@ -1,5 +1,5 @@
 {
-  "name": "@finnplay/shared",
+  "name": "@finnplay-test-task/shared",
   "version": "1.0.0",
   "private": true,
   "type": "module",
