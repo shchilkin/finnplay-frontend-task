@@ -14,6 +14,8 @@
   "scripts": {
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test",
     "dev": "concurrently -n server,client -c blue,green \"PORT=3010 npm run dev -w server\" \"npm run dev -w client\"",
+    "dev:error-api": "CATALOG_ERROR=1 npm run dev",
+    "dev:slow-api": "CATALOG_DELAY_MS=3000 npm run dev",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "lint": "oxlint --no-error-on-unmatched-pattern",
