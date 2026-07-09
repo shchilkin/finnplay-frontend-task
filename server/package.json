@@ -5,15 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "@finnplay-test-task/shared": "*",
+    "cookie": "^0.7.2",
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "@types/cookie": "^0.6.0",
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.1",
+    "@types/supertest": "^7.2.0",
+    "supertest": "^7.2.2",
     "tsx": "^4.23.0"
   }
 }

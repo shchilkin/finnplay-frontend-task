@@ -26,6 +26,7 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - The server is built with Express because the API surface is small and does not require a heavier framework.
 - `tsx` is used for local TypeScript development so the server can run without a separate build step.
 - The server validates `data.json` with the shared Zod schema on startup and fails fast if the catalog data is invalid.
+- Player sessions are stored in memory and identified by an `httpOnly` session cookie, matching the task requirement without adding a database.
 - A lightweight `/health` endpoint is included for future container health checks.
 
 ### Quality
@@ -33,6 +34,7 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - The Oxc toolchain is used for code quality:
   - `oxfmt` formats the codebase.
   - `oxlint` catches common JavaScript and TypeScript issues.
+- Vitest is used as the shared test runner across workspaces, with Supertest covering Express routes without starting a real HTTP port.
 - Lint rules start with a conservative baseline and can be tightened as the client and server code grow.
 
 ## Development

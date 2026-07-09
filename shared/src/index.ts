@@ -41,6 +41,10 @@ export const currentUserResponseSchema = z.object({
   username: usernameSchema.nullable(),
 });
 
+export const loginResponseSchema = z.object({
+  username: usernameSchema,
+});
+
 export type Game = z.infer<typeof gameSchema>;
 export type Provider = z.infer<typeof providerSchema>;
 export type GameGroup = z.infer<typeof gameGroupSchema>;
@@ -49,3 +53,4 @@ export type CatalogResponse = z.infer<typeof catalogResponseSchema>;
 export type Username = z.infer<typeof usernameSchema>;
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 export type CurrentUserResponse = z.infer<typeof currentUserResponseSchema>;
+export type LoginResponse = z.infer<typeof loginResponseSchema>;
