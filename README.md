@@ -45,12 +45,12 @@ http://localhost:3010
 
 Local development works without creating an `.env` file. See [.env.example](./.env.example) for supported variables:
 
-| Variable           | Default                                      | Description                                              |
-| ------------------ | -------------------------------------------- | -------------------------------------------------------- |
-| `PORT`             | `3010` through the root `npm run dev` script | Server port                                              |
-| `NODE_ENV`         | unset locally                                | Runtime mode                                             |
-| `CATALOG_DELAY_MS` | `0`                                          | Non-production catalog API response delay                |
-| `CATALOG_ERROR`    | unset                                        | Set to `1` in non-production to force catalog API errors |
+| Variable           | Default                               | Description                                              |
+| ------------------ | ------------------------------------- | -------------------------------------------------------- |
+| `PORT`             | `3010` in local dev, `3000` in Docker | Server port                                              |
+| `NODE_ENV`         | unset locally, `production` in Docker | Runtime mode                                             |
+| `CATALOG_DELAY_MS` | `0`                                   | Non-production catalog API response delay                |
+| `CATALOG_ERROR`    | unset                                 | Set to `1` in non-production to force catalog API errors |
 
 ## Login Credentials
 
@@ -104,7 +104,89 @@ npm run typecheck
 npm run test
 ```
 
-`npm run build` builds the client workspace.
+`npm run build` builds the shared package, server, and client.
+
+## Docker
+
+Docker support is added for production deployment on a VPS. The expected deployment flow is:
+
+1. GitHub Actions builds the Docker image from `Dockerfile`.
+2. GitHub Actions publishes the image to GitHub Container Registry.
+3. The VPS runs the published image through `coolify.compose.yml`.
+
+The published image name is:
+
+```txt
+ghcr.io/shchilkin/finnplay-frontend-task
+```
+
+Build the production image:
+
+```sh
+docker build -t finnplay-test-task .
+```
+
+Run the production container locally:
+
+```sh
+docker run --rm -p 3010:3000 finnplay-test-task
+```
+
+Open:
+
+```txt
+http://localhost:3010
+```
+
+You can also use Docker Compose for local production-image verification:
+
+```sh
+docker compose -f docker-compose.local.yml up --build
+```
+
+The Docker image runs one Express server. It serves:
+
+- the React production build from `client/dist`
+- the API under `/api`
+- the health check at `/health`
+
+## Docker Image Publishing
+
+Docker images are published by `.github/workflows/docker-publish.yml`.
+
+Tags:
+
+- `development` for pushes to the `development` branch
+- `latest` for pushes to the `main` branch
+- `sha-<commit>` for every published image
+
+## VPS Deployment with Coolify
+
+Use the Docker Compose build pack in Coolify and point it to `coolify.compose.yml`. The compose file pulls the published GHCR image instead of building on the VPS.
+
+Recommended settings:
+
+- Repository branch: `main`, `development`, or your deployment branch
+- Build pack: Docker Compose
+- Compose file: `./coolify.compose.yml`
+- Domain: `finnplay-task.shchilkin.dev`
+- Service: `app`
+- Port: `3000`
+- Health check path: `/health`
+- Runtime environment variables:
+  - `NODE_ENV=production`
+  - `PORT=3000`
+  - `IMAGE_TAG=development`
+
+DNS should point `finnplay-task.shchilkin.dev` to the VPS IP address before enabling the domain in Coolify.
+
+Coolify should route the configured domain to the `app` service on container port `3000`. The app uses same-origin API requests, so no CORS configuration is needed when the client and API are served from the same container.
+
+For a direct VPS Docker Compose deployment without Coolify:
+
+```sh
+IMAGE_TAG=development docker compose -f coolify.compose.yml up -d
+```
 
 ## API
 
@@ -176,6 +258,7 @@ Recommended manual checks:
 
 - The server is built with Express because the API surface is small and does not require a heavier framework.
 - `tsx` is used for local TypeScript development so the server can run without a separate build step.
+- The production Docker image runs a compiled server with `node` and serves the compiled React app from the same Express process.
 - The server validates `data.json` with the shared Zod schema on startup and fails fast if the catalog data is invalid.
 - Player sessions are stored in memory and identified by an `httpOnly` session cookie, matching the task requirement without adding a database.
 - A lightweight `/health` endpoint is included for future container health checks.
