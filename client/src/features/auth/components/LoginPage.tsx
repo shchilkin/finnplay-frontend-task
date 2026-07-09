@@ -14,9 +14,10 @@ type LoginPageProps = {
 };
 
 export function LoginPage({ error, isSubmitting, onSignIn }: LoginPageProps) {
-  const [username, setUsername] = useState("player1");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
+  const canSubmit = username.trim().length > 0 && password.length > 0;
 
   function handleUsernameChange(value: string) {
     setUsername(value);
@@ -62,11 +63,7 @@ export function LoginPage({ error, isSubmitting, onSignIn }: LoginPageProps) {
             </p>
           ) : null}
 
-          <button
-            className="login-button"
-            type="submit"
-            disabled={isSubmitting || password.length === 0}
-          >
+          <button className="login-button" type="submit" disabled={isSubmitting || !canSubmit}>
             {isSubmitting ? <span className="spinner" aria-label="Signing in" /> : "Login"}
           </button>
         </form>

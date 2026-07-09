@@ -386,7 +386,8 @@
   color: var(--accent-color);
 }
 
-.catalog-filter-option:focus {
+.catalog-filter-option:focus,
+.catalog-filter-option:has(input:focus) {
   outline: 3px solid var(--focus-ring-color);
   outline-offset: 4px;
 }

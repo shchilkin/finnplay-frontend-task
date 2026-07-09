@@ -115,7 +115,7 @@ describe("PlayerPage", () => {
     renderPlayerPage();
 
     await user.click(screen.getByRole("button", { name: "Show filters" }));
-    await user.click(screen.getByRole("button", { name: "Provider B" }));
+    await user.click(screen.getByRole("checkbox", { name: "Provider B" }));
 
     expect(screen.queryByAltText("Alpha Slots")).not.toBeInTheDocument();
     expect(screen.getByAltText("Beta Live")).toBeInTheDocument();

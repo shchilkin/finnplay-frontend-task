@@ -8,10 +8,20 @@ import { LoginPage } from "./LoginPage";
 type SignInMock = (payload: LoginRequest) => void;
 
 describe("LoginPage", () => {
-  it("keeps submit disabled until a password is entered", () => {
+  it("keeps submit disabled until login and password are entered", async () => {
+    const user = userEvent.setup();
+
     render(<LoginPage error={null} isSubmitting={false} onSignIn={vi.fn<SignInMock>()} />);
 
-    expect(screen.getByRole("button", { name: "Login" })).toBeDisabled();
+    const submitButton = screen.getByRole("button", { name: "Login" });
+
+    expect(submitButton).toBeDisabled();
+
+    await user.type(screen.getByLabelText("Login"), "player1");
+    expect(submitButton).toBeDisabled();
+
+    await user.type(screen.getByLabelText("Password"), "player1");
+    expect(submitButton).toBeEnabled();
   });
 
   it("does not submit invalid usernames", async () => {
@@ -20,7 +30,6 @@ describe("LoginPage", () => {
 
     render(<LoginPage error={null} isSubmitting={false} onSignIn={onSignIn} />);
 
-    await user.clear(screen.getByLabelText("Login"));
     await user.type(screen.getByLabelText("Login"), "unknown");
     await user.type(screen.getByLabelText("Password"), "unknown");
     await user.click(screen.getByRole("button", { name: "Login" }));
@@ -35,6 +44,7 @@ describe("LoginPage", () => {
 
     render(<LoginPage error={null} isSubmitting={false} onSignIn={onSignIn} />);
 
+    await user.type(screen.getByLabelText("Login"), "player1");
     await user.type(screen.getByLabelText("Password"), "player1");
     await user.click(screen.getByRole("button", { name: "Login" }));
 

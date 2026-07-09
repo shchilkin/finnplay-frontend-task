@@ -74,11 +74,11 @@ export function CatalogFiltersPanel({
         <FilterSection title="Providers" titleId="catalog-providers-title">
           <FilterOptionGrid>
             {catalog.providers.map((provider) => (
-              <FilterToggle
+              <FilterCheckbox
                 key={provider.id}
                 label={provider.name}
-                isSelected={filters.providerIds.includes(provider.id)}
-                onToggle={() => {
+                isChecked={filters.providerIds.includes(provider.id)}
+                onChange={() => {
                   updateFilters({
                     providerIds: toggleFilterValue(filters.providerIds, provider.id),
                   });
@@ -91,11 +91,11 @@ export function CatalogFiltersPanel({
         <FilterSection title="Game groups" titleId="catalog-game-groups-title">
           <FilterOptionGrid>
             {catalog.groups.map((group) => (
-              <FilterToggle
+              <FilterCheckbox
                 key={group.id}
                 label={group.name}
-                isSelected={filters.groupIds.includes(group.id)}
-                onToggle={() => {
+                isChecked={filters.groupIds.includes(group.id)}
+                onChange={() => {
                   updateFilters({
                     groupIds: toggleFilterValue(filters.groupIds, group.id),
                   });
@@ -108,7 +108,7 @@ export function CatalogFiltersPanel({
         <FilterSection title="Sorting" titleId="catalog-sorting-title">
           <div className="catalog-filter-inline-options">
             {catalogSortingOptions.map((sorting) => (
-              <FilterToggle
+              <SortingOptionButton
                 key={sorting}
                 label={sortingLabels[sorting]}
                 isSelected={filters.sorting === sorting}
@@ -243,13 +243,13 @@ function FilterOptionGrid({ children }: { children: ReactNode }) {
   return <div className="catalog-filter-option-grid">{children}</div>;
 }
 
-type FilterToggleProps = {
+type SortingOptionButtonProps = {
   isSelected: boolean;
   label: string;
   onToggle: () => void;
 };
 
-function FilterToggle({ isSelected, label, onToggle }: FilterToggleProps) {
+function SortingOptionButton({ isSelected, label, onToggle }: SortingOptionButtonProps) {
   return (
     <button
       className="catalog-filter-option"
@@ -260,6 +260,21 @@ function FilterToggle({ isSelected, label, onToggle }: FilterToggleProps) {
     >
       {label}
     </button>
+  );
+}
+
+type FilterCheckboxProps = {
+  isChecked: boolean;
+  label: string;
+  onChange: () => void;
+};
+
+function FilterCheckbox({ isChecked, label, onChange }: FilterCheckboxProps) {
+  return (
+    <label className="catalog-filter-option" data-selected={isChecked ? "true" : "false"}>
+      <input className="visually-hidden" type="checkbox" checked={isChecked} onChange={onChange} />
+      {label}
+    </label>
   );
 }
 
