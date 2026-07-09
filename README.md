@@ -26,6 +26,8 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - The client is built with Vite, React, and TypeScript to keep the frontend setup small and focused.
 - The Vite dev server proxies `/api` requests to the Node.js server, so client code can call the API through same-origin paths during local development.
 - The generated Vite starter UI is replaced with a minimal app shell before feature work starts.
+- Client code is grouped by feature (`auth`, `player`) so API calls, hooks, and UI components stay close to the behavior they support.
+- The login and player views use local component composition instead of a UI library, matching the task restriction and keeping the implementation close to the Figma design.
 
 ### Server
 
@@ -41,6 +43,8 @@ Full-stack React and Node.js application for filtering games by name, provider, 
   - `oxfmt` formats the codebase.
   - `oxlint` catches common JavaScript and TypeScript issues.
 - Vitest is used as the shared test runner across workspaces, with Supertest covering Express routes without starting a real HTTP port.
+- React Testing Library, user-event, jest-dom, and jsdom are used for client component tests that exercise UI behavior through accessible DOM queries.
+- Browser-mode or end-to-end tests are deferred until the game catalog and filtering UI exist, where real browser layout and responsive behavior matter more.
 - Lint rules start with a conservative baseline and can be tightened as the client and server code grow.
 
 ## Development

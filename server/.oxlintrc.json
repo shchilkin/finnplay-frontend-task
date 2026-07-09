@@ -1,0 +1,12 @@
+{
+  "$schema": "../node_modules/oxlint/configuration_schema.json",
+  "plugins": ["vitest"],
+  "overrides": [
+    {
+      "files": ["**/*.test.ts"],
+      "rules": {
+        "vitest/expect-expect": "off"
+      }
+    }
+  ]
+}
