@@ -28,6 +28,8 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - The generated Vite starter UI is replaced with a minimal app shell before feature work starts.
 - Client code is grouped by feature (`auth`, `player`) so API calls, hooks, and UI components stay close to the behavior they support.
 - The login and player views use local component composition instead of a UI library, matching the task restriction and keeping the implementation close to the Figma design.
+- The catalog defaults to A-Z sorting so the initial game list is deterministic and easy to scan.
+- Multiple selected values inside one filter criterion use OR semantics, while different criteria are combined with AND semantics.
 
 ### Server
 
