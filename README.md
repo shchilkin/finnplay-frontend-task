@@ -21,6 +21,12 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - Zod is used for runtime schema validation. Shared TypeScript types are inferred from Zod schemas so the validated data shape and static types stay aligned.
 - `data.json` is treated as source task data and is excluded from automatic formatting to avoid noisy fixture-only changes.
 
+### Client
+
+- The client is built with Vite, React, and TypeScript to keep the frontend setup small and focused.
+- The Vite dev server proxies `/api` requests to the Node.js server, so client code can call the API through same-origin paths during local development.
+- The generated Vite starter UI is replaced with a minimal app shell before feature work starts.
+
 ### Server
 
 - The server is built with Express because the API surface is small and does not require a heavier framework.
@@ -44,6 +50,15 @@ Install dependencies:
 ```sh
 npm install
 ```
+
+Run the server and client together:
+
+```sh
+npm run dev
+```
+
+- Client: `http://localhost:5173`
+- Server: `http://localhost:3010`
 
 Run checks:
 
