@@ -12,6 +12,7 @@
   ],
   "type": "module",
   "scripts": {
+    "check": "npm run format:check && npm run lint && npm run typecheck",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "lint": "oxlint --no-error-on-unmatched-pattern",

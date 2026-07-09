@@ -19,6 +19,20 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 - Lint rules start with a conservative baseline and can be tightened as the client and server code grow.
 - `data.json` is treated as source task data and is excluded from automatic formatting to avoid noisy fixture-only changes.
 
+## Development
+
+Install dependencies:
+
+```sh
+npm install
+```
+
+Run checks:
+
+```sh
+npm run check
+```
+
 ## Design
 
 Figma design: https://www.figma.com/file/totoTYpycpBnizdqV7nEUu/gamelist_2?node-id=0%3A1
