@@ -12,6 +12,7 @@ Full-stack React and Node.js application for filtering games by name, provider, 
 ## Technical Decisions
 
 - TypeScript is used across the repository because the task explicitly values typed code and the client and server use the same data shapes.
+- Zod is used for runtime schema validation. Shared TypeScript types are inferred from Zod schemas so the validated data shape and static types stay aligned.
 - npm workspaces are used to keep the client, server, and shared package in one repository with one lockfile and one install command.
 - The Oxc toolchain is used for code quality:
   - `oxfmt` formats the codebase.
