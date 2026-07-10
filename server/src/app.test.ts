@@ -22,10 +22,21 @@ describe("app routes", () => {
   });
 
   it("returns the validated catalog data", async () => {
-    const response = await request(createApp()).get("/api/catalog").expect(200);
+    const agent = request.agent(createApp());
+
+    await agent
+      .post("/api/auth/login")
+      .send({ username: "player1", password: "player1" })
+      .expect(200);
+
+    const response = await agent.get("/api/catalog").expect(200);
 
     expect(response.body.games.length).toBeGreaterThan(0);
     expect(response.body.providers.length).toBeGreaterThan(0);
     expect(response.body.groups.length).toBeGreaterThan(0);
+  });
+
+  it("rejects catalog requests without a session", async () => {
+    await request(createApp()).get("/api/catalog").expect(401).expect({ message: "Unauthorized" });
   });
 });

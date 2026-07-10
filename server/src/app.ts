@@ -3,7 +3,9 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
 
+import { getSessionId } from "./auth/cookies.js";
 import { createAuthRouter } from "./auth/authRoutes.js";
+import { getSessionUsername } from "./auth/sessionStore.js";
 import { loadCatalogData } from "./catalog.js";
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
@@ -24,7 +26,14 @@ export function createApp() {
   app.use(express.json());
   app.use("/api/auth", createAuthRouter());
 
-  app.get("/api/catalog", async (_request, response) => {
+  app.get("/api/catalog", async (request, response) => {
+    const username = getSessionUsername(getSessionId(request));
+
+    if (!username) {
+      response.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+
     await delay(catalogDelayMs);
 
     if (shouldFailCatalog) {

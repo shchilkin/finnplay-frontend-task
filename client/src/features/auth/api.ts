@@ -1,20 +1,32 @@
-import type { CurrentUserResponse, LoginRequest, LoginResponse } from "@finnplay-test-task/shared";
+import {
+  currentUserResponseSchema,
+  loginResponseSchema,
+  type CurrentUserResponse,
+  type LoginRequest,
+  type LoginResponse,
+} from "@finnplay-test-task/shared";
 
 import { requestJson } from "../../shared/api/http";
 
-export function getCurrentUser(): Promise<CurrentUserResponse> {
-  return requestJson<CurrentUserResponse>("/api/auth/me");
+export async function getCurrentUser(): Promise<CurrentUserResponse> {
+  const response = await requestJson<unknown>("/api/auth/me");
+
+  return currentUserResponseSchema.parse(response);
 }
 
-export function login(payload: LoginRequest): Promise<LoginResponse> {
-  return requestJson<LoginResponse>("/api/auth/login", {
+export async function login(payload: LoginRequest): Promise<LoginResponse> {
+  const response = await requestJson<unknown>("/api/auth/login", {
     method: "POST",
     body: JSON.stringify(payload),
   });
+
+  return loginResponseSchema.parse(response);
 }
 
-export function logout(): Promise<CurrentUserResponse> {
-  return requestJson<CurrentUserResponse>("/api/auth/logout", {
+export async function logout(): Promise<CurrentUserResponse> {
+  const response = await requestJson<unknown>("/api/auth/logout", {
     method: "POST",
   });
+
+  return currentUserResponseSchema.parse(response);
 }
