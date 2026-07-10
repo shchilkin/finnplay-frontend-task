@@ -30,6 +30,8 @@ Run the server and client together:
 npm run dev
 ```
 
+The root dev command builds the shared workspace first, then starts the server and client.
+
 Open the client at `http://localhost:5173`. The API runs on `http://localhost:3010`.
 
 Run the app with a delayed catalog response:
